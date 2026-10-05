@@ -1,0 +1,37 @@
+:root {
+    --primary: #3e2f1c;       
+    --primary-light: #56432a;
+    --gold: #b99d3f;         
+    --cream: #f5f1e6;         
+    --cream-dark: #ece6d4;
+    --white: #ffffff;
+    --text-muted: #777;
+    --danger: #c0392b;
+    --bg-gradient: linear-gradient(135deg, #241915, #3e2f1c 60%, #b99d3f);
+}
+
+* { box-sizing: border-box; }
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+}
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-area img {
+    width: 55px !important;
+    height: 55px !important;
+    max-width: 55px !important;
+    object-fit: contain;
+    display: block;
+}
+
+.logo-area h1 {
+    margin: 0;
+    font-size: 24px;
+    color: var();
+}

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artigos</title>
+<link rel="stylesheet" href="artigo.css">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <main class="artigos">
+        <div class="container">
+            <div class="secao-header">
+                <h2>Artigos Recentes</h2>
+                <button class="btn-publicar" onclick="abrirModal()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/>
+                    </svg>
+                    Publicar artigo
+                </button>
+            </div>
+ 
+            <div class="grid-artigos" id="grid-artigos">
+                <div class="card-artigo">
+                    <h3>Como começar a escrever melhor</h3>
+                    <p class="autor">Por João Silva</p>
+                    <p class="resumo">Dicas práticas para melhorar sua escrita e prender a atenção do leitor...</p>
+                    <a href="#" class="botao">Ler mais</a>
+                </div>
+ 
+                <div class="card-artigo">
+                    <h3>A importância da leitura diária</h3>
+                    <p class="autor">Por Maria Souza</p>
+                    <p class="resumo">Descubra como a leitura pode transformar sua forma de pensar...</p>
+                    <a href="#" class="botao">Ler mais</a>
+                </div>
+            </div>
+        </div>
+    </main>
+ 
+    <div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
+        <div class="modal">
+            <div class="modal-topo">
+                <h2 id="modal-titulo">Novo Artigo</h2>
+                <button class="modal-fechar" onclick="fecharModal()" aria-label="Fechar">×</button>
+            </div>
+            <div class="modal-corpo">
+                <div class="campo" id="campo-titulo">
+                    <label for="inp-titulo">Título <span class="obrigatorio">*</span></label>
+                    <input type="text" id="inp-titulo" placeholder="Escreva um título chamativo..." maxlength="100" oninput="contarCaracteres('inp-titulo','cnt-titulo',100)">
+                    <div class="cont"><span id="cnt-titulo">0</span>/100</div>
+                    <p class="erro-msg">Por favor, insira um título.</p>
+                </div>
+ 
+                <div class="campo-linha">
+                    <div class="campo" id="campo-autor">
+                        <label for="inp-autor">Autor <span class="obrigatorio">*</span></label>
+                        <input type="text" id="inp-autor" placeholder="Seu nome completo">
+                        <p class="erro-msg">Informe o nome do autor.</p>
+                    </div>
+                    <div class="campo">
+                        <label for="inp-categoria">Categoria</label>
+                        <select id="inp-categoria">
+                            <option value="">Selecione...</option>
+                            <option>Escrita</option>
+                            <option>Leitura</option>
+                            <option>Criatividade</option>
+                            <option>Tecnologia</option>
+                            <option>Cultura</option>
+                        </select>
+                    </div>
+                </div>
+ 
+                <div class="campo" id="campo-resumo">
+                    <label for="inp-resumo">Resumo <span class="obrigatorio">*</span></label>
+                    <textarea id="inp-resumo" placeholder="Um breve resumo para atrair o leitor..." maxlength="300" oninput="contarCaracteres('inp-resumo','cnt-resumo',300)"></textarea>
+                    <div class="cont"><span id="cnt-resumo">0</span>/300</div>
+                    <p class="erro-msg">Escreva um breve resumo do artigo.</p>
+                </div>
+ 
+                <div class="modal-rodape">
+                    <button class="btn-cancelar" onclick="fecharModal()">Cancelar</button>
+                    <button class="btn-enviar" onclick="publicarArtigo()">Publicar →</button>
+                </div>
+            </div>
+        </div>
+    </div>
+     <div class="toast" id="toast">✓ Artigo publicado com sucesso!</div>
+ 
+    <script>
+       let cardEditando = null;
+
+function abrirModal() {
+    document.getElementById('modal-overlay').classList.add('ativo');
+    document.getElementById('inp-titulo').focus();
+}
+
+function fecharModal() {
+    document.getElementById('modal-overlay').classList.remove('ativo');
+    limparFormulario();
+}
+
+document.getElementById('modal-overlay').addEventListener('click', function (e) {
+    if (e.target === this) fecharModal();
+});
+
+document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') fecharModal();
+});
+
+
+function validar(id, campoId) {
+    const val = document.getElementById(id).value.trim();
+    const campo = document.getElementById(campoId);
+
+    if (!val) {
+        campo.classList.add('invalido');
+        return false;
+    }
+
+    campo.classList.remove('invalido');
+    return true;
+}
+
+
+function publicarArtigo() {
+    const ok1 = validar('inp-titulo', 'campo-titulo');
+    const ok2 = validar('inp-autor', 'campo-autor');
+    const ok3 = validar('inp-resumo', 'campo-resumo');
+
+    if (!ok1 || !ok2 || !ok3) return;
+
+    const titulo = document.getElementById('inp-titulo').value.trim();
+    const autor = document.getElementById('inp-autor').value.trim();
+    const resumo = document.getElementById('inp-resumo').value.trim();
+    const categoria = document.getElementById('inp-categoria').value;
+
+    if (cardEditando) {
+        cardEditando.querySelector('h3').textContent = titulo;
+        cardEditando.querySelector('.autor').textContent = `Por ${autor}`;
+        cardEditando.querySelector('.resumo').textContent = resumo;
+
+        const catEl = cardEditando.querySelector('.categoria-badge');
+        if (categoria) {
+            if (catEl) {
+                catEl.textContent = categoria;
+            } else {
+                const badge = document.createElement('span');
+                badge.className = 'categoria-badge';
+                badge.textContent = categoria;
+                cardEditando.prepend(badge);
+            }
+        }
+
+        cardEditando = null;
+        fecharModal();
+        mostrarToast();
+        return;
+    }
+
+    const card = document.createElement('div');
+    card.className = 'card-artigo';
+    card.style.animation = 'fadeInUp 0.4s ease both';
+
+    card.innerHTML = `
+        <span class="badge-novo">Novo</span>
+        ${categoria ? `<span class="categoria-badge">${categoria}</span>` : ''}
+        <h3>${titulo}</h3>
+        <p class="autor">Por ${autor}</p>
+        <p class="resumo">${resumo}</p>
+
+        <div class="acoes">
+            <button class="btn-editar">Editar</button>
+            <button class="btn-excluir">Excluir</button>
+        </div>
+    `;
+
+    document.getElementById('grid-artigos').prepend(card);
+
+    fecharModal();
+    mostrarToast();
+}
+
+
+document.getElementById('grid-artigos').addEventListener('click', function (e) {
+    const card = e.target.closest('.card-artigo');
+    if (!card) return;
+
+    if (e.target.classList.contains('btn-excluir')) {
+        card.remove();
+    }
+
+    if (e.target.classList.contains('btn-editar')) {
+        cardEditando = card;
+
+        document.getElementById('inp-titulo').value = card.querySelector('h3').textContent;
+        document.getElementById('inp-autor').value = card.querySelector('.autor').textContent.replace('Por ', '');
+        document.getElementById('inp-resumo').value = card.querySelector('.resumo').textContent;
+
+        abrirModal();
+    }
+});
+
+
+function mostrarToast() {
+    const toast = document.getElementById('toast');
+    toast.classList.add('visivel');
+
+    setTimeout(() => {
+        toast.classList.remove('visivel');
+    }, 3000);
+}
+
+
+function limparFormulario() {
+    document.getElementById('inp-titulo').value = '';
+    document.getElementById('inp-autor').value = '';
+    document.getElementById('inp-resumo').value = '';
+    document.getElementById('inp-categoria').selectedIndex = 0;
+
+    document.getElementById('cnt-titulo').textContent = '0';
+    document.getElementById('cnt-resumo').textContent = '0';
+
+    ['campo-titulo', 'campo-autor', 'campo-resumo'].forEach(id => {
+        document.getElementById(id).classList.remove('invalido');
+    });
+}
+
+
+const style = document.createElement('style');
+style.textContent = `
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+`;
+document.head.appendChild(style);   
+    </script>
+</body>
+</html>
+    

@@ -1,0 +1,97 @@
+/* cadastro.css - agora alinhado a paleta compartilhada (base.css) */
+
+body {
+    height: 100vh;
+    background: var(--bg-gradient);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.form-box {
+    background: var(--white);
+    width: 100%;
+    max-width: 400px;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+.form-box h2 {
+    color: var(--primary);
+    font-size: 28px;
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+
+.form-box input {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 15px;
+    border: 1.5px solid #eee;
+    border-radius: 10px;
+    outline: none;
+    transition: 0.3s;
+    background: #f9f9f9;
+    font-size: 14px;
+}
+
+.form-box input:focus {
+    border-color: var(--gold);
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(185, 157, 63, 0.18);
+}
+
+.form-box button {
+    width: 100%;
+    padding: 14px;
+    background: var(--primary);
+    color: var(--gold);
+    border: 2px solid var(--gold);
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 10px;
+}
+
+.form-box button:hover {
+    background: var(--gold);
+    color: var(--primary);
+    transform: translateY(-2px);
+}
+
+.erro-cadastro {
+    background: #fdecea;
+    color: var(--danger);
+    border: 1px solid var(--danger);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 13px;
+    margin-bottom: 18px;
+    text-align: left;
+}
+
+.footer-text {
+    margin-top: 25px;
+    font-size: 14px;
+    color: #666;
+}
+
+.footer-text a {
+    color: var(--gold);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.footer-text a:hover {
+    color: var(--primary);
+}

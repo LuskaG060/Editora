@@ -1,0 +1,125 @@
+/* style.css - sidebar (painel do usuario logado), alinhada a paleta da marca */
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 250px;
+    height: 100vh;
+    background: var(--primary);
+    color: var(--cream);
+    transition: 0.3s;
+    overflow: hidden;
+    z-index: 900;
+    box-shadow: 2px 0 18px rgba(0,0,0,0.18);
+}
+
+.sidebar.fechada {
+    transform: translateX(-250px);
+}
+
+.perfil {
+    text-align: center;
+    padding: 28px 20px 20px;
+    border-bottom: 1px solid rgba(185, 157, 63, 0.25);
+}
+
+.perfil img {
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--gold);
+}
+
+.perfil h3 {
+    margin-top: 12px;
+    color: var(--white);
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.perfil span {
+    display: block;
+    margin-top: 2px;
+    font-size: 12px;
+    color: var(--gold-light);
+    letter-spacing: 0.04em;
+}
+
+nav.menu-lateral {
+    display: flex;
+    flex-direction: column;
+    padding: 14px 0;
+}
+
+nav.menu-lateral a {
+    color: var(--cream);
+    text-decoration: none;
+    padding: 13px 25px;
+    font-size: 14px;
+    border-left: 3px solid transparent;
+    transition: 0.2s;
+}
+
+nav.menu-lateral a:hover,
+nav.menu-lateral a.ativo {
+    background: rgba(185, 157, 63, 0.15);
+    border-left-color: var(--gold);
+    color: var(--gold-light);
+}
+
+.rodape {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.rodape button {
+    width: 100%;
+    padding: 10px 20px;
+    background: transparent;
+    border: 1.5px solid var(--danger);
+    color: #e08a7d;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.rodape button:hover {
+    background: var(--danger);
+    color: var(--white);
+}
+
+#toggleSidebar {
+    position: fixed;
+    left: 15px;
+    top: 15px;
+    z-index: 1000;
+    padding: 8px 12px;
+    cursor: pointer;
+    background: var(--primary);
+    color: var(--gold);
+    border: 1.5px solid var(--gold);
+    border-radius: 8px;
+}
+
+/* quando a sidebar esta presente (usuario logado), empurra o conteudo principal */
+body.tem-sidebar {
+    padding-left: 250px;
+    transition: padding-left 0.3s;
+}
+
+body.tem-sidebar.sidebar-fechada {
+    padding-left: 0;
+}
+
+@media (max-width: 768px) {
+    /* em telas pequenas a sidebar flutua por cima do conteudo, sem empurrar */
+    body.tem-sidebar {
+        padding-left: 0;
+    }
+}
